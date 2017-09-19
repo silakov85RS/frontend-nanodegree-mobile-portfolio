@@ -30,21 +30,22 @@
       body { background: #fff; }
       header, footer, .container { max-width: 45em; margin: 0 auto; }
 
-      header { padding: 0 0.5em; color: #C90B0B; display: flex; justify-content: space-between;}
+      header { padding: 0 0.5em; color: #C90B0B; display: flex; flex-wrap: wrap; justify-content: space-between;}
       header a { flex-grow: 0; }
       header img { border-radius: 40px; min-width: 70px; display: block; width: 70px; height: auto; }
       header p { font-weight: bold; margin: 0 .5em;}
       header p span { font-size: 0.8em; font-weight: normal;}
 
-      .author, .coauthor { font-size:1.5em; padding-top: 1em; padding-bottom: 1em; width: 49%; display: flex; }
-      .coauthor { text-align: right; justify-content: flex-end; }
+      .author, .coauthor { font-size:1.5em; padding-top: 1em; padding-bottom: 1em; display: flex; }
+      .coauthor { margin-left: auto; text-align: right; justify-content: flex-end; }
       .hero { padding: 2em; background-color: #f8f8f8; font-size:1.2em;
         border-bottom: 1px solid #ccc;
         border-top: 1px solid #ccc;
       }
 
-      .content { padding: 1em 1em; }
-      .content li { list-style-type: none; font-size: 1.1em;}
+      .content { padding: 2em; }
+      .content ul { padding: 0; margin: 0; }
+      .content li { list-style-type: none; font-size: 1.1em; overflow: hidden; }
       li img { float:left; padding-right: 1em; }
       li p { font-size: 0.9em; font-style: italic; }
 
@@ -56,9 +57,9 @@
 
       /* Smartphones (portrait) */
       @media only screen and (max-width: 480px) {
-        body { font-size: 12px;}
-        header { flex-direction: column; }
+        header { flex-direction: column; padding: 0 1em;}
         .author, .coauthor { width: 100%; }
+        .hero, .content { padding: 1em; }
       }
       @media print {
         * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; }
@@ -124,26 +125,30 @@
     </div>
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <script>
-      (function(w,g){w['GoogleAnalyticsObject']=g;
-      w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
+      function logCRP() {
+        t = window.performance.timing,
+        dcl = t.domContentLoadedEventStart - t.domLoading,
+        complete = t.domComplete - t.domLoading,
+        stats = document.getElementById('crp-stats');
+        stats.textContent = 'DCL: ' + dcl + 'ms, onload: ' + complete + 'ms';
+      }
+
+      window.addEventListener('load', function (event) {
+        logCRP();
+      });
+    </script>
+    <script>
+      (function (w, g) {
+        w.GoogleAnalyticsObject = g;
+        w[g] = w[g] || function () {
+          (w[g].q = w[g].q || []).push(arguments);
+        };w[g].l = 1 * new Date();
+      })(window, 'ga');
 
       // Optional TODO: replace with your Google Analytics profile ID.
       ga('create', 'UA-XXXX-Y');
       ga('send', 'pageview');
     </script>
     <script async src="https://www.google-analytics.com/analytics.js"></script>
-    <script>
-      function logCRP() {
-        var t = window.performance.timing,
-          dcl = t.domContentLoadedEventStart - t.domLoading,
-          complete = t.domComplete - t.domLoading;
-        var stats = document.getElementById("crp-stats");
-        stats.textContent = 'DCL: ' + dcl + 'ms, onload: ' + complete + 'ms';
-      }
-
-      window.addEventListener("load", function(event) {
-        logCRP();
-      });
-    </script>
   </body>
 </html>
